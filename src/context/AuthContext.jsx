@@ -1,4 +1,4 @@
-import { children, createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, 
         signInWithEmailAndPassword, 
         signOut, 
@@ -20,15 +20,16 @@ export const AuthContextProvider = ({children}) => {
     const logoutUser = () => signOut(auth);
 
     useEffect(() => {
-      const unsuscribe = onAuthStateChanged(auth, (curentUser) =>{// lo que va a ejecutar 
-        setUser(curentUser);
-      }); 
+      const Salir = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+      })
     
       return () => {
-        unsuscribe();
+        Salir();
       }
     }, [])
     
+    console.log(user);
     return(
         <UsersContext.Provider value={{createUser, loginUser, logoutUser, user}}>
             {children}
