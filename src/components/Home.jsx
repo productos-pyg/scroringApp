@@ -1,11 +1,15 @@
 import { UserAuth } from "../context/AuthContext"
+import Wrap from "./Wrap"
 
 //const{user} = UserAuth();
 
 const Home = () => {
 
+  //console.log(user)
   return (
-    <div>Holiiiiii bien y que?</div>
+    <Wrap>
+          <div>Holiiiiii bien o que?</div>
+    </Wrap>
   )
 }
 
