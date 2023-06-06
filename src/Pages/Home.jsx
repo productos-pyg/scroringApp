@@ -1,5 +1,5 @@
 import { UserAuth } from "../context/AuthContext"
-import Wrap from "./Wrap"
+import Wrap from "../components/Wrap"
 
 const Home = () => {
   //const{user} = UserAuth();

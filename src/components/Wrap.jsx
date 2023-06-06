@@ -6,9 +6,11 @@ const Wrap = ({children}) => {
   return (
     <>
     <Nav/>
-    <Sidebar/>
-    <div>
-    {children}
+    <div className='flex'>
+      <Sidebar/>
+      <div>
+      {children}
+      </div>
     </div>
     </>
   )
