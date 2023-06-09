@@ -1,27 +1,61 @@
 import React from 'react'
+import {VscEdit} from "react-icons/vsc"
+import {BsTrash3} from "react-icons/bs"
+import Swal from 'sweetalert2'
 
-const ChallengesTable = () => {
+const ChallengesTable = ({challengeList}) => {
+
+    const handleErase= ()=>{
+        console.log("Delete")
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+        })
+    }
+      
+  console.log(challengeList);
   return (
-    <div>
-        <table className='border'>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Año</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>SIR</td>
-                    <td>2023</td>
-                </tr>
-                <tr>
-                    <td>CopaInnobotics</td>
-                    <td>2023</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo de reto</th>
+                <th>Categorias</th>
+            </tr>
+        </thead>
+        <tbody>
+            {challengeList.map((itemChallenges)=>{
+                return(
+                    <tr key = {itemChallenges.id}>
+                        <td>{itemChallenges.name}</td>
+                        <td>{itemChallenges.type}</td>
+                        <td>{itemChallenges.categories.map((itemCat)=>{
+                            return(<span className='mr-2'>
+                                {itemCat.label}
+                            </span>)
+                        })}</td>
+                        <td>
+                            <button><VscEdit/></button>
+                            <button onClick={handleErase}><BsTrash3/></button>
+                        </td>
+                    </tr>
+                )
+            })}
+        </tbody>
+    </table>
   )
 }
 
