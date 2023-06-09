@@ -20,35 +20,55 @@ const NewChallenge = () => {
     {value:"senior", label:"Senior"},
     {value:"open", label:"Abierta"}
   ]
-  console.log(categories);
+  const handleChange = (selectedOption) => {
+    setCategories(selectedOption)
+  }
+
+  const handleSubmit = (event)=>{
+    event.preventDefault()
+    const challenge = {
+      name, 
+      type:challengeType,
+      description,
+      categories,
+      minTeams,
+      maxTeams
+    }
+    console.log(challenge);
+  }
+
   return (
     <Wrap>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label>Nombre del Reto</label>
             <input type='text' placeholder='name' onChange={e => setName(e.target.value)}></input>
-            
+
             <label>Tipo de reto</label>
             <select onChange={e => setChallengeType(e.target.value)}>
               <option >Reto Match</option>
               <option >Reto Task</option>
             </select>
-            
+
             <label>Descripción del Reto</label>
             <textarea onChange={e => setDescription(e.target.value)}/>
-            
+
             <label>Categorias</label>
             <Select 
+              value={categories}
               id = "categories"
               closeMenuOnSelect={false}
               components={animatedComponents} //es una libreria que trae recat selec internamnete
               isMulti
               options={categoriesOptions}
-              
+              onChange={handleChange}
             />
+
             <label>Minimo de Equipos</label>
             <input type='number' onChange={e => setMinTeams(e.target.value)}></input>
+
             <label>Maximo de Equipos</label>
             <input type='number' onChange={e => setMaxTeams(e.target.value)}></input>
+
             <button>Enviar</button>
         </form>
     </Wrap>

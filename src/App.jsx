@@ -26,7 +26,6 @@ function App() {
         <Route path='/newchallenge' element={<NewChallenge/>}/>
       </Routes>
     </AuthContextProvider>
-   
   )
 }
 
