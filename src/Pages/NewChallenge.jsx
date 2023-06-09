@@ -2,7 +2,10 @@ import {useState} from 'react' // los estado en nivel son lo mas importante dent
 import Wrap from '../components/Wrap'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import {getFirestore, doc, setDoc} from 'firebase/firestore'
+import app from '../firebase'
 
+const fireStore = getFirestore(app);
 const animatedComponents = makeAnimated();
 
 const NewChallenge = () => {
@@ -24,7 +27,7 @@ const NewChallenge = () => {
     setCategories(selectedOption)
   }
 
-  const handleSubmit = (event)=>{
+  const handleSubmit = async (event)=>{
     event.preventDefault()
     const challenge = {
       name, 
@@ -34,7 +37,7 @@ const NewChallenge = () => {
       minTeams,
       maxTeams
     }
-    console.log(challenge);
+    await setDoc(doc(fireStore,'Challenges', 'id1'),challenge);
   }
 
   return (
