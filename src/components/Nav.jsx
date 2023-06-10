@@ -14,12 +14,13 @@ const Nav = () => {
     }
 
     return (
-    <div className='h-20 flex justify-between shadow-md p-2 bg-gradient-to-r from-[#063653] to-[#1097d5]'>
+    <div className='h-24 flex items-center justify-between shadow-md p-2 bg-gradient-to-r from-[#063653] to-[#1097d5]'>
         <div className='h-14'>
             <img src={LogoWhite} className='h-full pl-4'/>
         </div>
         
-        <div className='flex
+        <div className='pr-3
+                        flex
                         flex-row 
                         items-center
                         justify-end 

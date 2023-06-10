@@ -7,7 +7,7 @@ import {TbUsers} from "react-icons/tb"
 const Sidebar = () => {
   return (
   <div  class="fixed 
-              top-20 
+              top-24 
               left-0
               w-55 
               h-screen">

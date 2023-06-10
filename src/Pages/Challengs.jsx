@@ -5,6 +5,7 @@ import ChallengesTable from '../components/ChallengesTable'
 import { collection, getFirestore, getDocs } from 'firebase/firestore'
 import app from '../firebase'
 import { async } from '@firebase/util'
+import {RxPlusCircled} from "react-icons/rx"
 
 const fireStore = getFirestore(app); 
 
@@ -33,8 +34,21 @@ const [challengeList, setChallengeList] = useState([]);
     <Wrap>
         <div>
             <button>
-                <Link to="/newchallenge">
-                    Crear reto
+                <Link className="flex
+                                  mb-5
+                                  flex-row 
+                                  items-center 
+                                  border 
+                                  rounded-md 
+                                  p-2 
+                                  mt-4
+                                  font-corbel
+                                  text-white 
+                                  bg-[#1097d5]
+                                  hover:bg-[#ffffff]
+                                  hover:text-[#1097d5]" to="/newchallenge">
+                  {<RxPlusCircled/>}
+                  <span class="ml-2">Nuevo Retos</span>
                 </Link>
             </button>
             <ChallengesTable challengeList={challengeList}/>
