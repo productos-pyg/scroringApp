@@ -8,6 +8,7 @@ import uuid from 'react-uuid'
 import {Link , useNavigate} from 'react-router-dom'
 import {TiArrowBackOutline} from "react-icons/ti"
 import Swal from 'sweetalert2'
+import {RiMailSendLine} from "react-icons/ri"
 
 const fireStore = getFirestore(app);
 const animatedComponents = makeAnimated();
@@ -54,18 +55,18 @@ const NewChallenge = () => {
     }
     await setDoc(doc(fireStore,'Challenges', id),challenge);
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estás seguro?',
+      text: "Enviar este elemento",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Enviar'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Enviado',
+          'Tu información ha sido enviada.',
           'success'
         )
       }navigate("/challenges");
@@ -74,23 +75,52 @@ const NewChallenge = () => {
 
   return (
     <Wrap>
-        <Link to="/challenges"><TiArrowBackOutline/></Link>
-        <form onSubmit={handleSubmit}>
-            <label>Nombre del Reto</label>
-            <input type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+      <button>        
+        <Link className='flex
+                        mb-5
+                        flex-row 
+                        items-center 
+                        border 
+                        rounded-md 
+                        p-2 
+                        mt-4
+                        font-corbel
+                        text-white 
+                        bg-[#1097d5]
+                        hover:bg-[#ffffff]
+                        hover:text-[#1097d5]' to="/challenges">
+          <TiArrowBackOutline className=''/>
+          <span className='mx-2'>Atras</span>
+        </Link>
+      </button>
 
-            <label>Tipo de reto</label>
-            <select required onChange={e => setChallengeType(e.target.value)}>
+      <div className='h-screen
+                      w-screen'>
+        <form className= 'w-10/12 flex flex-col' 
+        
+        onSubmit={handleSubmit}>
+            <label className='mt-2'>Nombre del Reto</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+
+            <label className='mt-2'>Tipo de reto</label>
+            <select className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
               <option ></option>
               <option >Reto Match</option>
               <option >Reto Task</option>
             </select>
 
-            <label>Descripción del Reto</label>
-            <textarea required onChange={e => setDescription(e.target.value)}/>
+            <label className='mt-2' >Descripción del Reto</label>
+            <textarea className='pl-2 
+                                py-2
+                                block 
+                                w-full 
+                                rounded-lg 
+                                border' 
+                                rows="4"
+                                required onChange={e => setDescription(e.target.value)}/>
 
-            <label>Categorias</label>
-            <Select 
+            <label className='mt-2' >Categorias</label>
+            <Select  className='pl-2 py-2'
               value={categories}
               id = "categories"
               required
@@ -101,14 +131,32 @@ const NewChallenge = () => {
               onChange={handleChange}
             />
 
-            <label>Minimo de Equipos</label>
-            <input type='number' required onChange={e => setMinTeams(e.target.value)}></input>
+            <label className='mt-2' >Minimo de Equipos</label>
+            <input className='pl-2 py-2 border rounded-lg' type='number' required onChange={e => setMinTeams(e.target.value)}></input>
 
-            <label>Maximo de Equipos</label>
-            <input type='number' required onChange={e => setMaxTeams(e.target.value)}></input>
+            <label className='mt-2'>Maximo de Equipos</label>
+            <input className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>
 
-            <button>Enviar</button>
+            <button className='flex
+
+                              w-1/12
+                              mb-5
+                              flex-row 
+                              items-center 
+                              border 
+                              rounded-md 
+                              p-2 
+                              mt-4
+                              font-corbel
+                              text-white 
+                              bg-[#1097d5]
+                              hover:bg-[#ffffff]
+                              hover:text-[#1097d5]'>
+            <RiMailSendLine/>
+            <span class="ml-2">Enviar</span>
+            </button>
         </form>
+      </div>
     </Wrap>
   )
 }
