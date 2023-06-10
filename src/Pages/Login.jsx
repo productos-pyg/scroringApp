@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import LogoWhite from "../assets/img/Logo blancoPygmalion-Potencia tus sueños.png"
 
 const Login = () => {
   const[email,setEmail] = useState(""); //estados vacios
@@ -21,7 +22,11 @@ const Login = () => {
     }
   return (
 
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-sky-950 to-sky-400 ">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#0c0c0c] to-[#b2b2b2] ">
+      <div>
+        <img src={LogoWhite} className='h-10 pl-4 '/>
+      </div>
+      
       <div className="px-10 py-10 mt-4 text-left shadow-2xl rounded-2xl">
         <h3 className="text-4xl font-bold text-center p-5 ">Login</h3>
         <form className='w-max 
@@ -30,7 +35,7 @@ const Login = () => {
                         flex 
                         flex-col 
                         items-center
-                        bg-sky-800
+                        bg-[#626567]
                         shadow-2xl' 
                 onSubmit={handleSubmit}>
 
@@ -58,10 +63,10 @@ const Login = () => {
                               py-2 
                               mt-4 
                               text-white 
-                              bg-sky-950 
+                              bg-[#0c0c0c]
                               rounded-lg 
                               hover:bg-sky-100
-                              hover:text-sky-950'>Enviar</button>
+                              hover:text-[#0c0c0c]'>Enviar</button>
           </div>
           
         </form>
