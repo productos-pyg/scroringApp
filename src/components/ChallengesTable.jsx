@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {VscEdit} from "react-icons/vsc"
 import {BsTrash3} from "react-icons/bs"
 import Swal from 'sweetalert2'
+import EditComponents from './EditComponents'
 
 const ChallengesTable = ({challengeList}) => {
+
+    const  [IsModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+      };
+    
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+      };
 
     const handleErase= ()=>{
         console.log("Delete")
@@ -24,6 +35,11 @@ const ChallengesTable = ({challengeList}) => {
             )
             }
         })
+    }
+
+    const handleEdit = ({name}) =>{
+        	console.log(name)
+
     }
 
     console.log(challengeList);
@@ -49,9 +65,34 @@ const ChallengesTable = ({challengeList}) => {
                                 </span>)
                             })}</td>
                             <td >
-                                <button className='pl-3 text-xl'><VscEdit/></button>
+                                {/* <button className='pl-3 text-xl' onClick={() => handleEdit(itemChallenges)}><VscEdit/></button> */}
+                                <button className='pl-3 text-xl' onClick={handleOpenModal}><VscEdit/></button>
                                 <button className='pl-2 text-xl' onClick={handleErase}><BsTrash3/></button>
                             </td>
+                            <EditComponents isOpen={IsModalOpen} onClose={handleCloseModal}>
+                                <label className='mt-2'>Nombre del Reto</label>
+                                 <input value= {itemChallenges.name} className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+
+                                <label className='mt-2'>Tipo de reto</label>
+                                <select value={itemChallenges.type} className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
+                                 <option ></option>
+                                <option >Reto Match</option>
+                                <option >Reto Task</option>
+                                </select>
+
+                                <label className='mt-2' >Descripción del Reto</label>
+                                <textarea value={itemChallenges.description}
+                                className='pl-2 
+                                py-2
+                                block 
+                                w-full 
+                                rounded-lg 
+                                border' 
+                                rows="4"
+                                required onChange={e => setDescription(e.target.value)}/>
+
+                                <button onClick={handleCloseModal}>Cerrar</button>
+                            </EditComponents>
                         </tr>
                     )
                 })}

@@ -11,6 +11,7 @@ import Challengs from './Pages/Challengs'
 import Teams from './Pages/Teams'
 import NewChallenge from './Pages/NewChallenge'
 
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -22,8 +23,9 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/challenges' element={<Challengs/>}/>
+        <Route path='/challenges/newchallenge' element={<NewChallenge/>}/>
         <Route path='/teams' element={<Teams/>}/>
-        <Route path='/newchallenge' element={<NewChallenge/>}/>
+        
       </Routes>
     </AuthContextProvider>
   )

@@ -46,7 +46,7 @@ const [challengeList, setChallengeList] = useState([]);
                                   text-white 
                                   bg-[#1097d5]
                                   hover:bg-[#ffffff]
-                                  hover:text-[#1097d5]" to="/newchallenge">
+                                  hover:text-[#1097d5]" to="/challenges/newchallenge">
                   {<RxPlusCircled/>}
                   <span class="mx-2">Nuevo Retos</span>
                 </Link>
