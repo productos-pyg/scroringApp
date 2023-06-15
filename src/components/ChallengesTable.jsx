@@ -10,11 +10,11 @@ const ChallengesTable = ({challengeList}) => {
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
-      };
+    };
     
-      const handleCloseModal = () => {
+    const handleCloseModal = () => {
         setIsModalOpen(false);
-      };
+    };
 
     const handleErase= ()=>{
         console.log("Delete")
@@ -70,28 +70,88 @@ const ChallengesTable = ({challengeList}) => {
                                 <button className='pl-2 text-xl' onClick={handleErase}><BsTrash3/></button>
                             </td>
                             <EditComponents isOpen={IsModalOpen} onClose={handleCloseModal}>
-                                <label className='mt-2'>Nombre del Reto</label>
-                                 <input value= {itemChallenges.name} className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+                                <div className="w-96
+                                                flex
+                                                flex-col 
+                                                items-center
+                                                bg-[#b8bfc2]">
+                                    <label className='mt-2'>Nombre del Reto</label>
+                                    <input value= {itemChallenges.name} className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
 
-                                <label className='mt-2'>Tipo de reto</label>
-                                <select value={itemChallenges.type} className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
-                                 <option ></option>
-                                <option >Reto Match</option>
-                                <option >Reto Task</option>
-                                </select>
+                                    <label className='mt-2'>Tipo de reto</label>
+                                    <select value={itemChallenges.type} className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
+                                    <option ></option>
+                                    <option >Reto Match</option>
+                                    <option >Reto Task</option>
+                                    </select>
 
-                                <label className='mt-2' >Descripción del Reto</label>
-                                <textarea value={itemChallenges.description}
-                                className='pl-2 
-                                py-2
-                                block 
-                                w-full 
-                                rounded-lg 
-                                border' 
-                                rows="4"
-                                required onChange={e => setDescription(e.target.value)}/>
+                                    <label className='mt-2' >Descripción del Reto</label>
+                                    <textarea value={itemChallenges.description}
+                                            className=' pl-2 
+                                                        py-2
+                                                        mx-10
+                                                        block 
+                                                        w-full 
+                                                        rounded-lg 
+                                                        border' 
+                                            rows="4"
+                                            required onChange={e => setDescription(e.target.value)}/>
+                                    
+                                    <label className='mt-2' >Categorias</label>
+                                    {/* <Select  className='pl-2 py-2'
+                                    value={itemChallenges.categories}
+                                    id = "categories"   
+                                    required
+                                    closeMenuOnSelect={false}
+                                    components={animatedComponents} //es una libreria que trae recat selec internamnete
+                                    isMulti
+                                    options={categoriesOptions}
+                                    onChange={handleChange}
+                                    /> */}
 
-                                <button onClick={handleCloseModal}>Cerrar</button>
+                                    <label className='mt-2' >Minimo de Equipos</label>
+                                    <input value={itemChallenges.maxTeams}
+                                            className='pl-2 py-2 border rounded-lg' type='number' required onChange={e => setMinTeams(e.target.value)}></input>
+
+                                    <label className='mt-2'>Maximo de Equipos</label>
+                                    <input value={itemChallenges.minTeams}
+                                            className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>
+                                            
+                                    <div className="w-100
+                                                    flex
+                                                    flex-row 
+                                                    items-center
+                                                    content-between
+                                                    px-20">
+                                        <button className='flex
+                                                            m-4
+                                                            flex-row 
+                                                            items-center 
+                                                            border 
+                                                            rounded-md 
+                                                            p-2 
+                                                            font-corbel
+                                                            text-white 
+                                                            bg-[#e21c15]
+                                                            hover:bg-[#ffffff]
+                                                            hover:text-[#e21c15]'
+                                                onClick={handleCloseModal}>Cancelar
+                                        </button>
+                                        <button className='flex
+                                                            m-4
+                                                            flex-row 
+                                                            items-center 
+                                                            border 
+                                                            rounded-md 
+                                                            p-2
+                                                            font-corbel
+                                                            text-white 
+                                                            bg-[#1097d5]
+                                                            hover:bg-[#ffffff]
+                                                            hover:text-[#1097d5]'>Guardar
+                                        </button>
+                                    </div>
+                                </div>
                             </EditComponents>
                         </tr>
                     )
