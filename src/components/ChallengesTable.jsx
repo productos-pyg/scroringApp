@@ -38,8 +38,7 @@ const ChallengesTable = ({challengeList}) => {
     }
 
     const handleEdit = ({name}) =>{
-        	console.log(name)
-
+        console.log(name)
     }
 
     console.log(challengeList);
@@ -57,7 +56,7 @@ const ChallengesTable = ({challengeList}) => {
                 {challengeList.map((itemChallenges)=>{
                     return(
                         <tr key = {itemChallenges.id}>
-                            <td className='py-2 pl-2 border  border-slate-600 w-2/5'>{itemChallenges.name}</td>
+                            <td className='py-2 pl-2 border border-slate-600 w-2/5'>{itemChallenges.name}</td>
                             <td className='py-2 pl-2 border border-slate-600 w-1/5'>{itemChallenges.type}</td>
                             <td className='py-2 pl-2 border border-slate-600 w-2/6'>{itemChallenges.categories.map((itemCat)=>{
                                 return(<span className='mr-2'>
@@ -69,6 +68,7 @@ const ChallengesTable = ({challengeList}) => {
                                 <button className='pl-3 text-xl' onClick={handleOpenModal}><VscEdit/></button>
                                 <button className='pl-2 text-xl' onClick={handleErase}><BsTrash3/></button>
                             </td>
+                            
                             <EditComponents isOpen={IsModalOpen} onClose={handleCloseModal}>
                                 <div className="w-96
                                                 flex
@@ -153,6 +153,8 @@ const ChallengesTable = ({challengeList}) => {
                                     </div>
                                 </div>
                             </EditComponents>
+                            
+                            
                         </tr>
                     )
                 })}

@@ -8,7 +8,7 @@ const Wrap = ({children}) => {
     <Nav/>
     <div className='flex'>
       <Sidebar/>
-      <div className='pl-32 py-4'>
+      <div className='pl-32 py-32'>
       {children}
       </div>
     </div>
