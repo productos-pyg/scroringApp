@@ -15,14 +15,14 @@ const Nav = () => {
 
     return (
     <div className='fixed h-24 w-screen flex items-center justify-between shadow-md p-2 bg-gradient-to-r from-[#063653] to-[#1097d5]'>
-        <div className='h-14 w-1/4'>
+        <div className='h-14 w-64'>
             <button>
                 <Link to="/home">
                     <img src={LogoWhite} className='h-full pl-4'/>
                 </Link>
             </button>
         </div>
-        
+
         <div className='pr-3
                         flex
                         flex-row 
