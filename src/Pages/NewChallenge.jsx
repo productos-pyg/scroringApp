@@ -53,7 +53,6 @@ const NewChallenge = () => {
       maxTeams,
       id
     }
-    await setDoc(doc(fireStore,'Challenges', id),challenge);
     Swal.fire({
       title: '¿Estás seguro?',
       text: "Enviar este elemento",
@@ -64,12 +63,14 @@ const NewChallenge = () => {
       confirmButtonText: 'Enviar'
     }).then((result) => {
       if (result.isConfirmed) {
+        setDoc(doc(fireStore,'Challenges', id),challenge);
         Swal.fire(
           'Enviado',
           'Tu información ha sido enviada.',
           'success'
         )
-      }navigate("/challenges");
+      }
+      navigate("/challenges");
     })
   }
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Wrap from './Wrap';
-import {doc, getFirestore, getDoc} from 'firebase/firestore';
+import {doc, getFirestore, getDoc, updateDoc, Firestore, collection} from 'firebase/firestore';
 import app from '../firebase';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
@@ -11,10 +11,12 @@ import {TiArrowBackOutline} from "react-icons/ti"
 import Swal from 'sweetalert2'
 import {RiMailSendLine} from "react-icons/ri"
 
+
 const fireStore = getFirestore(app);
 const animatedComponents = makeAnimated();
 
 const EditComponents = () => {
+  const [challengeData, setChallengeData] = useState({});
   const [name,setName] = useState("");
   const [challengeType, setChallengeType] =useState("");
   const [description, setDescription] = useState("");
@@ -22,6 +24,7 @@ const EditComponents = () => {
   const [minTeams, setMinTeams] = useState("");
   const [maxTeams, setMaxTeams] = useState("");
 
+  const navigate = useNavigate();
   const categoriesOptions = [
     {value:"toddler", label:"Infantil"},
     {value:"junior", label:"Junior"},
@@ -33,20 +36,13 @@ const EditComponents = () => {
     setCategories(selectedOption)
   }
 
+  const actualizarFirebase= async()=>{
+
+  }
+
   const handleSubmit = async (event)=>{
     event.preventDefault();
-    const id = idGeneretor();
     console.log(id);
-    const challenge = {
-      name, 
-      type:challengeType,
-      description,
-      categories,
-      minTeams,
-      maxTeams,
-      id
-    }
-    await setDoc(doc(fireStore,'Challenges', id),challenge);
     Swal.fire({
       title: '¿Estás seguro?',
       text: "Enviar este elemento",
@@ -57,12 +53,21 @@ const EditComponents = () => {
       confirmButtonText: 'Enviar'
     }).then((result) => {
       if (result.isConfirmed) {
+       updateDoc(doc(fireStore,"Challenges",`${id}`),{
+        name:name, 
+        type:challengeType,
+        description:description,
+        categories:categories,
+        minTeams:minTeams,
+        maxTeams:maxTeams,
+       })
         Swal.fire(
           'Enviado',
           'Tu información ha sido enviada.',
           'success'
         )
-      }navigate("/challenges");
+      }
+      navigate("/challenges");
     })
   }
 
@@ -75,13 +80,20 @@ const EditComponents = () => {
 // Crea una referencia al documento
   const documentRef = doc(fireStore, collectionName, documentId);
 
-// Obtiene el documento
-  getDoc(documentRef)
+  useEffect(() => {
+    // Obtiene el documento
+    getDoc(documentRef)
     .then((docSnapshot) => {
       if (docSnapshot.exists()) {
       // El documento existe
         const data = docSnapshot.data();
         console.log('Documento encontrado:', data);
+        setName(data.name);
+        setChallengeType(data.type);
+        setDescription(data.description);
+        setCategories(data.categories);
+        setMinTeams(data.minTeams);
+        setMaxTeams(data.maxTeams);
       } else {
       // El documento no existe
         console.log('El documento no existe');
@@ -89,9 +101,13 @@ const EditComponents = () => {
     })
     .catch((error) => {
       console.log('Error al obtener el documento:', error);
-    });
-    
+    });  
+  }, [])
+  
 
+
+    
+  console.log(categories)
     return (
     <Wrap>
         <button>        
@@ -119,45 +135,77 @@ const EditComponents = () => {
         
         onSubmit={handleSubmit}>
             <label className='mt-2'>Nombre del Reto</label>
-            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+            {name !== ""
+              ?<input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' value={name} required onChange={e => setName(e.target.value)}></input>
+              :<input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>}
 
             <label className='mt-2'>Tipo de reto</label>
-            <select className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
-              <option ></option>
-              <option >Reto Match</option>
-              <option >Reto Task</option>
-            </select>
+            {challengeType !== ""
+              ?<select value={challengeType} className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
+                <option ></option>
+                <option >Reto Match</option>
+                <option >Reto Task</option>
+              </select>
+              :<select className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
+                <option ></option>
+                <option >Reto Match</option>
+                <option >Reto Task</option>
+              </select>
+            }
 
             <label className='mt-2' >Descripción del Reto</label>
-            <textarea className='pl-2 
+            {description !== ""
+              ?<textarea className='pl-2 
+                                  py-2
+                                  block 
+                                  w-full 
+                                  rounded-lg 
+                                  border' 
+                                  rows="4"
+                                  value={description}
+                                  required onChange={e => setDescription(e.target.value)}/>
+              :<textarea className='pl-2 
                                 py-2
                                 block 
                                 w-full 
                                 rounded-lg 
                                 border' 
                                 rows="4"
-                                required onChange={e => setDescription(e.target.value)}/>
+                                required onChange={e => setDescription(e.target.value)}/>}
 
             <label className='mt-2' >Categorias</label>
-            <Select  className='pl-2 py-2'
-              value={categories}
-              id = "categories"
-              required
-              closeMenuOnSelect={false}
-              components={animatedComponents} //es una libreria que trae recat selec internamnete
-              isMulti
-              options={categoriesOptions}
-              onChange={handleChange}
-            />
+            {description !== ""
+              ?<Select  className='pl-2 py-2'
+                value={categories}
+                id = "categories"
+                required
+                closeMenuOnSelect={false}
+                components={animatedComponents} //es una libreria que trae recat selec internamnete
+                isMulti
+                options={categoriesOptions}
+                onChange={handleChange}
+              />
+              :<Select  className='pl-2 py-2'
+                id = "categories"
+                required
+                closeMenuOnSelect={false}
+                components={animatedComponents} //es una libreria que trae recat selec internamnete
+                isMulti
+                options={categoriesOptions}
+                onChange={handleChange}
+              />}
 
             <label className='mt-2' >Minimo de Equipos</label>
-            <input className='pl-2 py-2 border rounded-lg' type='number' required onChange={e => setMinTeams(e.target.value)}></input>
-
+            {minTeams !== ""                  /*operador ternario*/
+              ?<input className='pl-2 py-2 border rounded-lg' value={minTeams} type='number' required onChange={e => setMinTeams(e.target.value)}></input>
+              :<input className='pl-2 py-2 border rounded-lg' type='number' required onChange={e => setMinTeams(e.target.value)}></input>}
+            
             <label className='mt-2'>Maximo de Equipos</label>
-            <input className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>
-
+            {maxTeams !== ""
+              ?<input className='pl-2 py-2 border rounded-lg' value={maxTeams} type='number' onChange={e => setMaxTeams(e.target.value)}></input>
+              :<input className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>}
+            
             <button className='flex
-
                               w-1/12
                               mb-5
                               flex-row 
