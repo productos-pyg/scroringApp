@@ -28,7 +28,6 @@ const NewEvents = () => {
     const [challenges, setChallenges] = useState([]);
     const [challengesOptions, setChallengesOptions] = useState([]);
     const [enable, setEnable] = useState(false);
-    const [challengesToSend, setChallengesToSend] = useState([]);
 
   
   const queryChallenge = async() => {
@@ -47,7 +46,6 @@ const NewEvents = () => {
           type:doc.data().type
         }
       }
-      console.log(temporalChallenges);
       temporalChallenges.push(temporalChallenge);
 }
 );
@@ -58,19 +56,15 @@ setChallengesOptions(temporalChallenges);
     queryChallenge();
   }, [])
   
-console.log(challenges);
-
-
     const handleChanllenge = (selectOption)=>{
-      console.log(selectOption);
       setChallenges(selectOption);
     }
 
     const handleSubmit = async (e)=>{
       e.preventDefault();
       const id = idGeneretor();
-      console.log(id);
       const event = {
+        id,
         name, 
         date,
         description,
@@ -78,7 +72,7 @@ console.log(challenges);
         state,
         city,
         address,
-        challenges:challenges.value,
+        challenges,
         enable
       }
       Swal.fire({
@@ -92,7 +86,6 @@ console.log(challenges);
       }).then((result) => {
         if (result.isConfirmed) {
           setDoc(doc(fireStore,'Events', id),event);
-          console.log(event);
           Swal.fire(
             'Enviado',
             'Tu información ha sido enviada.',
@@ -137,6 +130,7 @@ console.log(challenges);
           
           <div class="flex items-center justify-end text-[#1097d5] font-bold mb-7">
             <input type="checkbox"
+                    onChange={e => setEnable(e.target.checked)}
                     className="w-4 
                               h-4
                               accent-[#1097d5] 
@@ -153,8 +147,8 @@ console.log(challenges);
             <div className="w-1/4 flex flex-col ">
               <label className='mr-2'>Fecha</label>
               <input type = "date" 
+              onChange={e=>setDate(e.target.value)}
                       required
-                      placeholder="Select date"
                       class="border 
                             border-gray-200 
                             text-gray-900 
@@ -202,6 +196,8 @@ console.log(challenges);
               closeMenuOnSelect={false}
               components={animatedComponents} 
               isMulti
+              getOptionValue={(option)=>option.value}
+              getOptionLabel={(option)=>option.label}
               options={challengesOptions}
               onChange={handleChanllenge}
             />
@@ -222,7 +218,7 @@ console.log(challenges);
                                 bg-[#1097d5]
                                 hover:bg-[#ffffff]
                                 hover:text-[#1097d5]
-                                shadow-[rgba(0,_0,_0,_0.2)_0px_40px_50px_-7px] 
+                                shadow-lg 
                               shadow-[#1097d5]/100'>
               <RiMailSendLine/>
               <span className="ml-2">Enviar</span>

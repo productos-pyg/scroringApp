@@ -1,10 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import Wrap from '../components/Wrap'
 import {RxPlusCircled} from "react-icons/rx"
 import { Link } from 'react-router-dom'
+import EventsTable from '../components/EventsTable'
+import { collection, getFirestore, getDocs } from 'firebase/firestore'
+import app from '../firebase'
+import {async} from '@firebase/util'
 
+const firestore = getFirestore(app);
 
 const Events = () => {
+
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    const queryEvent = async()=>{
+      const list = [];
+    
+  try{
+    const dataEvets= await getDocs(collection(firestore,"Events"));
+    dataEvets.forEach((doc) =>{
+      list.push(doc.data());
+    });
+    setEventList(list);
+    }
+  catch(error){
+    console.log(error);
+  }
+    }
+    queryEvent();
+  }, [])
+ console.log("event: ",eventList);
   return (
     <Wrap>
         <div>
@@ -26,7 +52,7 @@ const Events = () => {
                   <span className="mx-2">Nuevo Evento</span>
                 </Link>
             </button>
-            {/* <ChallengesTable challengeList={challengeList}/> */}
+            <EventsTable eventList={eventList}/> 
         </div>
     </Wrap>
   )
