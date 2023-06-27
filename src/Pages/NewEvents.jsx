@@ -128,7 +128,7 @@ setChallengesOptions(temporalChallenges);
                       w-screen'>
         <form className= 'w-10/12 flex flex-col' onSubmit={handleSubmit}>
           
-          <div class="flex items-center justify-end text-[#1097d5] font-bold mb-7">
+          <div className="flex items-center justify-end text-[#1097d5] font-bold mb-7">
             <input type="checkbox"
                     onChange={e => setEnable(e.target.checked)}
                     className="w-4 
@@ -149,7 +149,7 @@ setChallengesOptions(temporalChallenges);
               <input type = "date" 
               onChange={e=>setDate(e.target.value)}
                       required
-                      class="border 
+                      className="border 
                             border-gray-200 
                             text-gray-900 
                             text-sm 

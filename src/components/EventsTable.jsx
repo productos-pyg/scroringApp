@@ -36,7 +36,7 @@ console.log(eventList);
         console.log(id);
     }
 
-  return (
+return (
     <div className='h-screen w-screen'>
     <table className='border-collapse  w-10/12 border-slate-950'>
         <thead>
@@ -50,13 +50,12 @@ console.log(eventList);
             {eventList.map((itemEvent)=>{
                 return(
                     <tr key = {itemEvent.id}>
-                        <td className='py-2 pl-2 border border-slate-600 w-2/5'>{itemEvent.name}</td>
-                        <td className='py-2 pl-2 border border-slate-600 w-1/5'>{itemEvent.city}</td>
-                        <td className='py-2 pl-2 border border-slate-600 w-2/6'>{itemEvent.date}</td>
-                        <td >
-                            {/* <button className='pl-3 text-xl' onClick={() => handleEdit(itemChallenges)}><VscEdit/></button> */}
+                        <td className='py-2 pl-2 border border-slate-600 w-1/2'>{itemEvent.name}</td>
+                        <td className='py-2 pl-2 border border-slate-600 w-1/4'>{itemEvent.city}</td>
+                        <td className='py-2 pl-2 border border-slate-600 w-1/4'>{itemEvent.date}</td>
+                        <td className='py-2 flex items-center justify-start'>
                             <button className='pl-2 text-xl' ><SlEye/></button>
-                            <button className='pl-3 text-xl' ><Link to = {`/events/${itemEvent.id}`}><VscEdit/></Link></button>
+                            <button className='pl-2 text-xl' ><Link to = {`/events/${itemEvent.id}`}><VscEdit/></Link></button>
                             <button className='pl-2 text-xl' onClick={()=>handleErase(itemEvent.id)}><BsTrash3/></button>
                         </td>                            
                     </tr>
@@ -65,7 +64,7 @@ console.log(eventList);
         </tbody>
     </table>
     </div>
-  )
+)
 }
 
 export default EventsTable
