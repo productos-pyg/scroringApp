@@ -113,7 +113,6 @@ console.log(challenges);
     <Wrap>      
         <button>      
         <Link className='flex
-                        mb-5
                         flex-row 
                         items-center 
                         border 
@@ -124,7 +123,10 @@ console.log(challenges);
                         text-white 
                         bg-[#1097d5]
                         hover:bg-[#ffffff]
-                        hover:text-[#1097d5]' to="/events">
+                        hover:text-[#1097d5]
+                        shadow-lg 
+                        shadow-[#1097d5]/100' 
+              to="/events">
           <TiArrowBackOutline className=''/>
           <span className='mx-2'>Atras</span>
         </Link>
@@ -133,30 +135,36 @@ console.log(challenges);
                       w-screen'>
         <form className= 'w-10/12 flex flex-col' onSubmit={handleSubmit}>
           
-          <div class="flex items-center mr-4">
+          <div class="flex items-center justify-end text-[#1097d5] font-bold mb-7">
             <input type="checkbox"
                     className="w-4 
                               h-4
                               accent-[#1097d5] 
                               focus:accent-[#1097d5b4]" ></input>
-            <label className="ml-2">Habilitar evento </label>
+            <label className="ml-2 text-lg">Habilitar evento </label>
           </div>
-          <label className='mt-2'>Nombre del Evento</label>
-          <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
 
-            <label className='mt-2'>Fecha del evento</label>
-            <input type = "date" 
-                    required
-                    placeholder="Select date"
-                    class="bg-gray-50 border 
-                          border-gray-300 
-                          text-gray-900 
-                          text-sm 
-                          rounded-lg 
-                          block 
-                          w-full 
-                          pl-10 
-                          p-2.5"></input>
+          <div className=" flex flex-row items-center justify-between">
+            <div className="w-3/4 flex flex-col  mr-5">
+              <label >Nombre del Evento</label>
+              <input className='w-full pl-2 py-2  border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+            </div>
+
+            <div className="w-1/4 flex flex-col ">
+              <label className='mr-2'>Fecha</label>
+              <input type = "date" 
+                      required
+                      placeholder="Select date"
+                      class="border 
+                            border-gray-200 
+                            text-gray-900 
+                            text-sm 
+                            rounded-lg 
+                            block 
+                            w-full
+                            p-2.5"></input>
+              </div>
+            </div>
 
             <label className='mt-2' >Descripción del Evento</label>
             <textarea className='pl-2 
@@ -167,21 +175,27 @@ console.log(challenges);
                                 border' 
                                 rows="4"
                                 required onChange={e => setDescription(e.target.value)}/>
+            
+            <div className=" mt-2 flex flex-row items-center justify-between">
+              <div className="w-1/3 mr-5 flex flex-col ">
+                <label >País</label>
+                <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setCountry(e.target.value)}></input>
+              </div>
+              <div className="w-1/3 mr-5 flex flex-col ">
+                <label >Estado</label>
+                <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setState(e.target.value)}></input>
+              </div>
+              <div className="w-1/3 flex flex-col ">
+                <label>Ciudad</label>
+                <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setCity(e.target.value)}></input>
+              </div>
+            </div>
 
-            <label className='mt-2' >País</label>
-            <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setCountry(e.target.value)}></input>
-
-            <label className='mt-2'>Estado</label>
-            <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setState(e.target.value)}></input>
-
-            <label className='mt-2'>Ciudad</label>
-            <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setCity(e.target.value)}></input>
-
-            <label className='mt-2'>dirección</label>
+            <label className='mt-2'>Dirección</label>
             <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setAddress(e.target.value)}></input>
 
             <label className='mt-2' >Agrergar Retos</label>
-            <Select  className='pl-2 py-2'
+            <Select  className='py-2'
               value={challenges}
               id = "challenges"
               required
@@ -191,24 +205,29 @@ console.log(challenges);
               options={challengesOptions}
               onChange={handleChanllenge}
             />
-
-            <button className='flex
-                              mb-5
-                              flex-row 
-                              items-center
-                              justify-center
-                              border 
-                              rounded-md 
-                              p-2 
-                              mt-4
-                              font-corbel
-                              text-white 
-                              bg-[#1097d5]
-                              hover:bg-[#ffffff]
-                              hover:text-[#1097d5]'>
-            <RiMailSendLine/>
-            <span className="ml-2">Enviar</span>
-            </button>
+            
+            <div className='w-full flex items-center justify-center'>
+              <button className='flex
+                                w-32
+                                mb-5
+                                flex-row 
+                                items-center
+                                justify-center
+                                border 
+                                rounded-md 
+                                p-2 
+                                mt-4
+                                font-corbel
+                                text-white 
+                                bg-[#1097d5]
+                                hover:bg-[#ffffff]
+                                hover:text-[#1097d5]
+                                shadow-[rgba(0,_0,_0,_0.2)_0px_40px_50px_-7px] 
+                              shadow-[#1097d5]/100'>
+              <RiMailSendLine/>
+              <span className="ml-2">Enviar</span>
+              </button>
+            </div>
         </form>
       </div>
     </Wrap>

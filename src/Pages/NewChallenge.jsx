@@ -137,25 +137,27 @@ const NewChallenge = () => {
 
             <label className='mt-2'>Maximo de Equipos</label>
             <input className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>
-
-            <button className='flex
-
-                              w-1/12
-                              mb-5
-                              flex-row 
-                              items-center 
-                              border 
-                              rounded-md 
-                              p-2 
-                              mt-4
-                              font-corbel
-                              text-white 
-                              bg-[#1097d5]
-                              hover:bg-[#ffffff]
-                              hover:text-[#1097d5]'>
-            <RiMailSendLine/>
-            <span className="ml-2">Enviar</span>
-            </button>
+            
+            <div className='w-full flex items-center justify-center'>
+              <button className='flex
+                                w-32
+                                mb-5
+                                flex-row 
+                                items-center
+                                justify-center
+                                border 
+                                rounded-md 
+                                p-2 
+                                mt-4
+                                font-corbel
+                                text-white 
+                                bg-[#1097d5]
+                                hover:bg-[#ffffff]
+                                hover:text-[#1097d5]'>
+              <RiMailSendLine/>
+              <span className="ml-2">Enviar</span>
+              </button>
+            </div>
         </form>
       </div>
     </Wrap>
