@@ -29,7 +29,6 @@ export const AuthContextProvider = ({children}) => {
       }
     }, [])
     
-    console.log(user);
     return(
         <UsersContext.Provider value={{createUser, loginUser, logoutUser, user}}>
             {children}

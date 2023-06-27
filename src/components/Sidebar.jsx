@@ -6,13 +6,13 @@ import {TbUsers} from "react-icons/tb"
 
 const Sidebar = () => {
   return (
-  <div  class="fixed 
+  <div  className="fixed 
               top-24 
               left-0
               w-55 
               h-screen">
 
-    <div class="h-full 
+    <div className="h-full 
                 px-3 
                 py-4 
                 overflow-y-auto 
@@ -30,19 +30,19 @@ const Sidebar = () => {
         <li>
           <Link className="flex flex-col items-center" to="/events">
             <TfiCup/>
-            <span class="ml-2">Eventos</span>
+            <span className="ml-2">Eventos</span>
           </Link>
         </li>
         <li>
           <Link className="flex flex-col items-center" to="/challenges">
             <BsGear/>
-            <span class="ml-2">Retos</span>
+            <span className="ml-2">Retos</span>
           </Link>
         </li>
         <li>
           <Link className="flex flex-col items-center" to="/teams">
             <TbUsers/>
-            <span class="ml-2">Equipos</span>
+            <span className="ml-2">Equipos</span>
           </Link>
         </li>
       </ul>

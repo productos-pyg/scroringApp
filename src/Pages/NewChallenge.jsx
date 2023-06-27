@@ -154,7 +154,7 @@ const NewChallenge = () => {
                               hover:bg-[#ffffff]
                               hover:text-[#1097d5]'>
             <RiMailSendLine/>
-            <span class="ml-2">Enviar</span>
+            <span className="ml-2">Enviar</span>
             </button>
         </form>
       </div>

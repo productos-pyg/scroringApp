@@ -48,7 +48,7 @@ const [challengeList, setChallengeList] = useState([]);
                                   hover:bg-[#ffffff]
                                   hover:text-[#1097d5]" to="/challenges/newchallenge">
                   {<RxPlusCircled/>}
-                  <span class="mx-2">Nuevo Retos</span>
+                  <span className="mx-2">Nuevo Retos</span>
                 </Link>
             </button>
             <ChallengesTable challengeList={challengeList}/>
