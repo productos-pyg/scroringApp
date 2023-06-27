@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 import Select from 'react-select';
 import makeAnimate from 'react-select/animated';
 
-
 const animatedComponents = makeAnimate();
 const fireStore = getFirestore(app);
 
@@ -112,7 +111,7 @@ console.log(challenges);
 
   return (
     <Wrap>      
-        <button>        
+        <button>      
         <Link className='flex
                         mb-5
                         flex-row 
@@ -125,7 +124,7 @@ console.log(challenges);
                         text-white 
                         bg-[#1097d5]
                         hover:bg-[#ffffff]
-                        hover:text-[#1097d5]' to="/challenges">
+                        hover:text-[#1097d5]' to="/events">
           <TiArrowBackOutline className=''/>
           <span className='mx-2'>Atras</span>
         </Link>
@@ -134,14 +133,30 @@ console.log(challenges);
                       w-screen'>
         <form className= 'w-10/12 flex flex-col' onSubmit={handleSubmit}>
           
-          <label>Habilitar evento: </label>
-          <input type="checkbox"></input>
-
+          <div class="flex items-center mr-4">
+            <input type="checkbox"
+                    className="w-4 
+                              h-4
+                              accent-[#1097d5] 
+                              focus:accent-[#1097d5b4]" ></input>
+            <label className="ml-2">Habilitar evento </label>
+          </div>
           <label className='mt-2'>Nombre del Evento</label>
           <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
 
             <label className='mt-2'>Fecha del evento</label>
-            <input type = "date" required></input>
+            <input type = "date" 
+                    required
+                    placeholder="Select date"
+                    class="bg-gray-50 border 
+                          border-gray-300 
+                          text-gray-900 
+                          text-sm 
+                          rounded-lg 
+                          block 
+                          w-full 
+                          pl-10 
+                          p-2.5"></input>
 
             <label className='mt-2' >Descripción del Evento</label>
             <textarea className='pl-2 
@@ -178,11 +193,10 @@ console.log(challenges);
             />
 
             <button className='flex
-
-                              w-1/12
                               mb-5
                               flex-row 
-                              items-center 
+                              items-center
+                              justify-center
                               border 
                               rounded-md 
                               p-2 
@@ -197,7 +211,6 @@ console.log(challenges);
             </button>
         </form>
       </div>
-
     </Wrap>
   )
 }
