@@ -12,6 +12,8 @@ import Teams from './Pages/Teams'
 import NewChallenge from './Pages/NewChallenge'
 import EditComponents from './components/EditComponents'
 import NewEvents from './Pages/NewEvents'
+import EditEvents from './components/EditEvents'
+import EventDetails from './Pages/EventDetails'
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/events' element={<Events/>}/>
         <Route path='/events/newevent' element={<NewEvents/>}/>
+        <Route path='/events/details/:id' element={<EventDetails/>}/>
+        <Route path='/events/:id' element={<EditEvents/>}/>
         <Route path='/challenges' element={<Challengs/>}/>
         <Route path='/challenges/newchallenge' element={<NewChallenge/>}/>
         <Route path='/challenges/:id' element={<EditComponents/>}/>
