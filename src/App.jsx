@@ -14,6 +14,7 @@ import EditComponents from './components/EditComponents'
 import NewEvents from './Pages/NewEvents'
 import EditEvents from './components/EditEvents'
 import EventDetails from './Pages/EventDetails'
+import NewTeams from './Pages/NewTeams'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path='/challenges/newchallenge' element={<NewChallenge/>}/>
         <Route path='/challenges/:id' element={<EditComponents/>}/>
         <Route path='/teams' element={<Teams/>}/>
+        <Route path='/teams/newteams' element={<NewTeams/>}/>
       </Routes>
     </AuthContextProvider>
   )

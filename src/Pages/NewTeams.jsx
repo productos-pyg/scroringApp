@@ -9,17 +9,34 @@ import {Link , useNavigate} from 'react-router-dom'
 import {TiArrowBackOutline} from "react-icons/ti"
 import Swal from 'sweetalert2'
 import {RiMailSendLine} from "react-icons/ri"
+import { useForm } from 'react-hook-form'
 
 const fireStore = getFirestore(app);
 const animatedComponents = makeAnimated();
 
 const NewTeams = () => {
-  const [name,setName] = useState("");
-  const [challengeType, setChallengeType] =useState("");
-  const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [minTeams, setMinTeams] = useState("");
-  const [maxTeams, setMaxTeams] = useState("");
+  const{register, handleSubmit} = useForm();
+
+
+  const [teamsName,setTeamsName] = useState("");
+  const [teamsEntity,setTeamsEntity] = useState("");
+  const [teamsCity,setTeamsCity] = useState("");
+  const [eventsType, setEventsType] = useState([]);
+  const [challengeType, setChallengeType] = useState([]);
+  const [teamsNumbMembers, setTeamsNumbMembers] = useState("");
+  const [coachName,setCoachName ] = useState("");
+  const [coachDate, setCoachDate] = useState("");
+  const [coachId, setCoachId] = useState("");
+  const [coachSize, setCoachSize] = useState("");
+  const [coachPhone, setCoachPhone] = useState("");
+  const [coachEmail, setCoachEmail] = useState("");
+  const [menberName,setMemberName ] = useState("");
+  const [memberDate, setMemberDate] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [memberSize, setMemberSize] = useState("");
+  const [coachObjet, setCoachObjet] = useState("");
+  const [membersObjet, setMembersObjet] = useState("");
+ 
 
   const navigate = useNavigate();
 
@@ -28,32 +45,10 @@ const NewTeams = () => {
     const Id = IdFull.substring(0,8);
     return Id;
   }
-  
-  const categoriesOptions = [
-    {value:"toddler", label:"Infantil"},
-    {value:"junior", label:"Junior"},
-    {value:"youth", label:"Juvenil"},
-    {value:"senior", label:"Senior"},
-    {value:"open", label:"Abierta"}
-  ]
-  const handleChange = (selectedOption) => {
-    setCategories(selectedOption)
-  }
 
-  const handleSubmit = async (event)=>{
-    event.preventDefault();
+  const onSubmit = (data) =>{
     const id = idGeneretor();
-    console.log(id);
-    const challenge = {
-      name, 
-      type:challengeType,
-      description,
-      categories,
-      minTeams,
-      maxTeams,
-      id
-    }
-    await setDoc(doc(fireStore,'Challenges', id),challenge);
+    const teams = data;
     Swal.fire({
       title: '¿Estás seguro?',
       text: "Enviar este elemento",
@@ -64,14 +59,16 @@ const NewTeams = () => {
       confirmButtonText: 'Enviar'
     }).then((result) => {
       if (result.isConfirmed) {
+        setDoc(doc(fireStore,'Teams', id),teams);
         Swal.fire(
           'Enviado',
           'Tu información ha sido enviada.',
           'success'
         )
-      }navigate("/challenges");
+      }navigate("/teams");
     })
   }
+
 
   return (
     <Wrap>
@@ -88,7 +85,7 @@ const NewTeams = () => {
                         text-white 
                         bg-[#1097d5]
                         hover:bg-[#ffffff]
-                        hover:text-[#1097d5]' to="/challenges">
+                        hover:text-[#1097d5]' to="/teams">
           <TiArrowBackOutline className=''/>
           <span className='mx-2'>Atras</span>
         </Link>
@@ -98,44 +95,76 @@ const NewTeams = () => {
                       w-screen'>
         <form className= 'w-10/12 flex flex-col' 
         
-        onSubmit={handleSubmit}>
-            <label className='mt-2'>Nombre del Reto</label>
-            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setName(e.target.value)}></input>
+        onSubmit={handleSubmit(onSubmit)}>
+            <label className='mt-2'>Nombre del Equipo</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setTeamsName(e.target.value)} {...register("teamsName")}></input>
 
-            <label className='mt-2'>Tipo de reto</label>
-            <select className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)}>
+            <label className='mt-2'>Entidad a la que pertenece</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' onChange={e => setTeamsEntity(e.target.value)} {...register("teamsEntity")}></input>
+
+            <label className='mt-2'>Ciudad</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setTeamsCity(e.target.value)} {...register("teamsCity")}></input>
+            
+            <label className='mt-2'>Evento</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setEventsType(e.target.value)} {...register("EventsType")}></input>
+
+            <label className='mt-2'>Reto</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setChallengeType(e.target.value)} {...register("challengesType")}></input>
+
+            <label className='mt-2'>Numero de participantes</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setTeamsNumbMembers(e.target.value)} {...register("TeamsNumbMembers")}></input>
+
+            <fieldset>
+            <legend>Datos del Entrenador</legend>
+            <label className='mt-2'>Nombre completo</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setCoachName(e.target.value)} {...register("coachName")}></input>
+
+            <label className='mt-2'>Fecha de nacimiento</label>
+            <input className='pl-2 py-2 border rounded-lg' type='date' required onChange={e => setCoachDate(e.target.value)} {...register("coachDate")}></input>
+
+            <label className='mt-2'>Numero de identificación</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text'  required onChange={e => setCoachId(e.target.value)} {...register("coachId")}></input>
+            
+            <label className='mt-2'>Numero de contacto</label>
+            <input className='pl-2 py-2 border rounded-lg' type='tel' required onChange={e => setCoachPhone(e.target.value)} {...register("coachPhone")}></input>
+            
+            <label className='mt-2'>Correo electronico</label>
+            <input className='pl-2 py-2 border rounded-lg' type='email' required onChange={e => setCoachEmail(e.target.value)} {...register("coachEmail")}></input>
+
+            <label className='mt-2'>Talla de camiseta</label>
+            <select className='pl-2 py-2 border rounded-lg' required onChange={e => setCoachSize(e.target.value)} {...register("coachSize")}>
               <option ></option>
-              <option >Reto Match</option>
-              <option >Reto Task</option>
+              <option >XS</option>
+              <option >S</option>
+              <option >M</option>
+              <option >L</option>
+              <option >XL</option>
+              <option >XXL</option>
             </select>
+            </fieldset>
 
-            <label className='mt-2' >Descripción del Reto</label>
-            <textarea className='pl-2 
-                                py-2
-                                block 
-                                w-full 
-                                rounded-lg 
-                                border' 
-                                rows="4"
-                                required onChange={e => setDescription(e.target.value)}/>
+            <fieldset>
+            <legend>Datos de los Participantes</legend>
+            <label className='mt-2'>Nombre completo</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='name' required onChange={e => setMemberName(e.target.value)} {...register("memberName")}></input>
 
-            <label className='mt-2' >Categorias</label>
-            <Select  className='pl-2 py-2'
-              value={categories}
-              id = "categories"
-              required
-              closeMenuOnSelect={false}
-              components={animatedComponents} //es una libreria que trae recat selec internamnete
-              isMulti
-              options={categoriesOptions}
-              onChange={handleChange}
-            />
+            <label className='mt-2'>Fecha de nacimiento</label>
+            <input className='pl-2 py-2 border rounded-lg' type='date' required onChange={e => setMemberDate(e.target.value)} {...register("memberDate")}></input>
 
-            <label className='mt-2' >Minimo de Equipos</label>
-            <input className='pl-2 py-2 border rounded-lg' type='number' required onChange={e => setMinTeams(e.target.value)}></input>
-
-            <label className='mt-2'>Maximo de Equipos</label>
-            <input className='pl-2 py-2 border rounded-lg' type='number' onChange={e => setMaxTeams(e.target.value)}></input>
+            <label className='mt-2'>Numero de identificación</label>
+            <input className='pl-2 py-2 border rounded-lg' type='text'  required onChange={e => setMemberId(e.target.value)} {...register("memberId")}></input>
+            
+            <label className='mt-2'>Talla de camiseta</label>
+            <select className='pl-2 py-2 border rounded-lg' required onChange={e => setMemberSize(e.target.value)} {...register("memberSize")}>
+              <option ></option>
+              <option >XS</option>
+              <option >S</option>
+              <option >M</option>
+              <option >L</option>
+              <option >XL</option>
+              <option >XXL</option>
+            </select>
+            </fieldset>
 
             <button className='flex
 
