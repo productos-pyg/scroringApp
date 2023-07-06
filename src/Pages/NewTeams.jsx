@@ -87,7 +87,7 @@ const NewTeams = () => {
                         hover:text-[#1097d5]
                         shadow-lg 
                         shadow-[#1097d5]/100' 
-              to="/events">
+              to="/teams">
           <TiArrowBackOutline className=''/>
           <span className='mx-2'>Atras</span>
         </Link>
@@ -127,8 +127,8 @@ const NewTeams = () => {
               </div>
             </div>
 
-            <fieldset className='border border-dashed border-gray-400 px-5 pt-2 pb-3 mb-10'>
-            <legend className='text-gray-400 font-bold'>Datos del Entrenador</legend>
+            <fieldset className='border rounded-lg border-dashed border-gray-300 px-5 pt-2 pb-3 mb-10'>
+            <legend className='text-gray-300 font-bold'>Datos del Entrenador</legend>
               <div className="flex flex-col mb-5">
                   <label className='mt-2'>Nombre completo</label>
                   <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='Full name' required onChange={e => setCoachName(e.target.value)} {...register("coachName")}></input>
@@ -169,8 +169,8 @@ const NewTeams = () => {
               </div>
             </fieldset>
 
-            <fieldset className='border border-dashed border-gray-400 px-5 pt-2'>
-            <legend className='text-gray-400 font-bold'>Datos de los Participantes</legend>
+            <fieldset className='border rounded-lg border-dashed border-gray-300 px-5 pt-2'>
+            <legend className='text-gray-300 font-bold'>Datos de los Participantes</legend>
               <div className="flex flex-col mb-8">
                   <label className='mt-2'>Nombre completo</label>
                   <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='Full name' required onChange={e => setCoachName(e.target.value)} {...register("coachName")}></input>
