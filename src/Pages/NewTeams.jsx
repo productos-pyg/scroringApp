@@ -1,7 +1,5 @@
 import {useState} from 'react' // los estado en nivel son lo mas importante dentro de la funcion
 import Wrap from '../components/Wrap'
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 import {getFirestore, doc, setDoc} from 'firebase/firestore'
 import app from '../firebase'
 import uuid from 'react-uuid'
@@ -10,11 +8,18 @@ import {TiArrowBackOutline} from "react-icons/ti"
 import Swal from 'sweetalert2'
 import {RiMailSendLine} from "react-icons/ri"
 import { useForm } from 'react-hook-form'
+import {TbUserPlus,TbUserMinus} from 'react-icons/tb'
+import { useQuery } from '@tanstack/react-query'
+import { getEvents } from '../API/eventsApi'
+
 
 const fireStore = getFirestore(app);
-const animatedComponents = makeAnimated();
 
 const NewTeams = () => {
+  const {isLoading, data, isError, error} = useQuery({
+    queryKey:["events"],
+    queryFn:getEvents
+  });
   const{register, handleSubmit} = useForm();
 
 
@@ -30,20 +35,42 @@ const NewTeams = () => {
   const [coachSize, setCoachSize] = useState("");
   const [coachPhone, setCoachPhone] = useState("");
   const [coachEmail, setCoachEmail] = useState("");
-  const [menberName,setMemberName ] = useState("");
+  const [memberName,setMemberName ] = useState("");
   const [memberDate, setMemberDate] = useState("");
   const [memberId, setMemberId] = useState("");
   const [memberSize, setMemberSize] = useState("");
-  const [coachObjet, setCoachObjet] = useState("");
-  const [membersObjet, setMembersObjet] = useState("");
- 
-
+  // const [coachObjet, setCoachObjet] = useState("");
+  // const [membersObjet, setMembersObjet] = useState("");
+  const [membersInfo, setMembersInfo] = useState([]);
+  const [retoPost, setRetoPost] = useState([]);
+  
   const navigate = useNavigate();
 
   function idGeneretor(){
     const IdFull = uuid();
     const Id = IdFull.substring(0,8);
     return Id;
+  }
+console.log(membersInfo);
+
+  const handleAddMember = ()=>{
+    const newMember ={
+      memberName,
+      memberDate,
+      memberId,
+      memberSize
+    }
+    setMembersInfo(prevMember =>[...prevMember,newMember])
+  }
+
+  const handleDeleMembers = (index) =>{
+    const copyMembers= [...membersInfo];
+    copyMembers.splice(index, 1);
+    setMembersInfo(copyMembers);
+  }
+
+  const pasarIndex = (index) =>{
+    console.log(index);
   }
 
   const onSubmit = (data) =>{
@@ -69,7 +96,9 @@ const NewTeams = () => {
     })
   }
 
-
+  if(isLoading)return <div>Loading...</div>
+  else if (isError)return <div>Error</div>
+  console.log(data[retoPost]);
   return (
     <Wrap>
       <button>      
@@ -115,18 +144,26 @@ const NewTeams = () => {
             <div className="flex flex-row items-center justify-between mb-10">
               <div className="flex flex-col w-2/5 mr-5">
                 <label className='mt-2'>Evento</label>
-                <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setEventsType(e.target.value)} {...register("EventsType")}></input>
+                <select className='pl-2 py-2 border rounded-lg' required onChange={e => setEventsType(e.target.value)} {...register("coachSize")}>
+                  {data.map((optionEvents, index)=>
+                      <option key={optionEvents.id} onChange={()=>pasarIndex(index)}>{optionEvents.name}</option>
+                  )}     
+                </select>
               </div>
               <div className="flex flex-col w-1/2 mr-5">
                 <label className='mt-2'>Reto</label>
-                <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setChallengeType(e.target.value)} {...register("challengesType")}></input>
+                {/* <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setChallengeType(e.target.value)} {...register("challengesType")}></input> */}
+                {/* <select className='pl-2 py-2 border rounded-lg' required onChange={e => setChallengeType(e.target.value)} {...register("coachSize")}>
+                {data[retoPost].map((optionEvents, index)=>
+                    <option key={optionEvents.id}>{optionEvents.label}</option>
+                )}     
+                </select> */}
               </div>
               <div className="flex flex-col w-1/5">
                 <label className='mt-2'>Numero de participantes</label>
                 <input className='pl-2 py-2 border rounded-lg' type='text' required onChange={e => setTeamsNumbMembers(e.target.value)} {...register("TeamsNumbMembers")}></input>
               </div>
             </div>
-
             <fieldset className='border rounded-lg border-dashed border-gray-300 px-5 pt-2 pb-3 mb-10'>
             <legend className='text-gray-300 font-bold'>Datos del Entrenador</legend>
               <div className="flex flex-col mb-5">
@@ -143,7 +180,6 @@ const NewTeams = () => {
                     <input className='pl-2 py-2 border rounded-lg' type='email' required onChange={e => setCoachEmail(e.target.value)} {...register("coachEmail")}></input>
                   </div>
                 </div>
-
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col w-1/3 mr-5">
                     <label className='mt-2'>Fecha de nacimiento</label>
@@ -171,22 +207,32 @@ const NewTeams = () => {
 
             <fieldset className='border rounded-lg border-dashed border-gray-300 px-5 pt-2'>
             <legend className='text-gray-300 font-bold'>Datos de los Participantes</legend>
-              <div className="flex flex-col mb-8">
+            {membersInfo.map((member,index)=>
+            <div key={index}>
+              <button onClick={()=>handleDeleMembers(index)}><TbUserMinus/></button>
+              <div className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{member.memberName}</div>
+              <div className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{member.memberDate}</div>
+              <div className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{member.memberId}</div>
+              <div className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{member.memberSize}</div>
+            </div>
+            )}
+              <div className="flex flex-row mb-8">
+                <div className="flex flex-col mb-8 w-full">
                   <label className='mt-2'>Nombre completo</label>
-                  <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='Full name' required onChange={e => setCoachName(e.target.value)} {...register("coachName")}></input>
+                  <input className='pl-2 py-2 border rounded-lg' type='text' placeholder='Full name' required onChange={e => setMemberName(e.target.value)}></input>
 
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col w-1/3 mr-5">
                     <label className='mt-2'>Fecha de nacimiento</label>
-                    <input className='pl-2 py-2 border rounded-lg' type='date' required onChange={e => setCoachDate(e.target.value)} {...register("coachDate")}></input>
+                    <input className='pl-2 py-2 border rounded-lg' type='date' required onChange={e => setMemberDate(e.target.value)}></input>
                   </div>
                   <div className="flex flex-col w-1/3 mr-5">
                     <label className='mt-2'>Numero de identificación</label>
-                    <input className='pl-2 py-2 border rounded-lg' type='text'  required onChange={e => setCoachId(e.target.value)} {...register("coachId")}></input>
+                    <input className='pl-2 py-2 border rounded-lg' type='text'  required onChange={e => setMemberId(e.target.value)}></input>
                   </div>
                   <div className="flex flex-col w-1/3">
                     <label className='mt-2'>Talla de camiseta</label>
-                    <select className='pl-2 py-2 border rounded-lg' required onChange={e => setCoachSize(e.target.value)} {...register("coachSize")}>
+                    <select className='pl-2 py-2 border rounded-lg' required onChange={e => setMemberSize(e.target.value)}>
                       <option ></option>
                       <option >XS</option>
                       <option >S</option>
@@ -197,8 +243,16 @@ const NewTeams = () => {
                     </select>
                   </div>
                 </div>
+                </div>
+                <div>
+                  <button className="border rounded-lg border-gray-500 p-3 " onClick={handleAddMember}><TbUserPlus/></button>
+                </div>
               </div>
+
             </fieldset>
+            
+           
+            
             <div className='w-full flex items-center justify-center'>
               <button className='flex
                                 w-32

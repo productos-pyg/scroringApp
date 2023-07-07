@@ -91,7 +91,11 @@ const EventDetails = () => {
         </ul>
           <div>
             <span className="text-base font-extrabold leading-tight text-gray-500 dark:text-gray-300">Retos: </span>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{nameChallenges}</span>
+           <ul>
+           {nameChallenges.map((challenge)=>
+            <li className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{challenge}</li>
+            )}
+           </ul>
           </div>
 
         <button className='w-full flex items-center justify-center'>
