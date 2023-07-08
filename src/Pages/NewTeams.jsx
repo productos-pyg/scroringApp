@@ -12,7 +12,6 @@ import {TbUserPlus,TbUserMinus} from 'react-icons/tb'
 import { useQuery } from '@tanstack/react-query'
 import { getEvents } from '../API/eventsApi'
 
-
 const fireStore = getFirestore(app);
 
 const NewTeams = () => {
@@ -22,11 +21,10 @@ const NewTeams = () => {
   });
   const{register, handleSubmit} = useForm();
 
-
   const [teamsName,setTeamsName] = useState("");
   const [teamsEntity,setTeamsEntity] = useState("");
   const [teamsCity,setTeamsCity] = useState("");
-  const [eventsType, setEventsType] = useState([]);
+  const [eventsType, setEventsType] = useState("");
   const [challengeType, setChallengeType] = useState([]);
   const [teamsNumbMembers, setTeamsNumbMembers] = useState("");
   const [coachName,setCoachName ] = useState("");
@@ -42,7 +40,7 @@ const NewTeams = () => {
   // const [coachObjet, setCoachObjet] = useState("");
   // const [membersObjet, setMembersObjet] = useState("");
   const [membersInfo, setMembersInfo] = useState([]);
-  const [retoPost, setRetoPost] = useState([]);
+  const [retoPost, setRetoPost] = useState({ value: '', index: -1 });
   
   const navigate = useNavigate();
 
@@ -51,7 +49,6 @@ const NewTeams = () => {
     const Id = IdFull.substring(0,8);
     return Id;
   }
-console.log(membersInfo);
 
   const handleAddMember = ()=>{
     const newMember ={
@@ -70,7 +67,13 @@ console.log(membersInfo);
   }
 
   const pasarIndex = (index) =>{
-    console.log(index);
+    console.log("hili")
+    console.log(index)
+  // const selectedIndex = event.target.selectedIndex;
+  // setRetoPost({
+  // value: event.target.value,
+  // index: selectedIndex
+  // });
   }
 
   const onSubmit = (data) =>{
@@ -98,7 +101,8 @@ console.log(membersInfo);
 
   if(isLoading)return <div>Loading...</div>
   else if (isError)return <div>Error</div>
-  console.log(data[retoPost]);
+  console.log(eventsType);
+
   return (
     <Wrap>
       <button>      
@@ -144,10 +148,12 @@ console.log(membersInfo);
             <div className="flex flex-row items-center justify-between mb-10">
               <div className="flex flex-col w-2/5 mr-5">
                 <label className='mt-2'>Evento</label>
-                <select className='pl-2 py-2 border rounded-lg' required onChange={e => setEventsType(e.target.value)} {...register("coachSize")}>
+                <select className='pl-2 py-2 border rounded-lg' 
+                        required
+                        onChange={e => setEventsType(e.target.name)}>
                   {data.map((optionEvents, index)=>
-                      <option key={optionEvents.id} onChange={()=>pasarIndex(index)}>{optionEvents.name}</option>
-                  )}     
+                    <option key={index} >{optionEvents.name}</option>
+                  )}
                 </select>
               </div>
               <div className="flex flex-col w-1/2 mr-5">
@@ -250,8 +256,6 @@ console.log(membersInfo);
               </div>
 
             </fieldset>
-            
-           
             
             <div className='w-full flex items-center justify-center'>
               <button className='flex
