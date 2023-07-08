@@ -61,7 +61,7 @@ const EventDetails = () => {
   return (
     <Wrap>
     <div className='h-screen w-screen flex flex-row items-start'>
-      <div className="w-2/5  p-4 bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-[#063653] dark:border-gray-700 shadow-lg shadow-[#1097d5]/100">
+      <div className="w-2/5 p-4 bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-[#063653] dark:border-gray-700 shadow-lg shadow-[#1097d5]/100">
         <span className="mb-4 items-center w-full flex justify-end text-sm font-medium text-gray-500 dark:text-gray-400">Fecha: {date}</span>
         <div className="flex flex-col items-baseline text-gray-900 dark:text-white">
             <span className="w-full text-4xl font-extrabold tracking-tight text-center">{name}</span>
